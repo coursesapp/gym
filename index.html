@@ -1,0 +1,548 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>محمود لبيب – مدرب شخصي</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://unpkg.com/aos@2.3.1/dist/aos.css" />
+  <style>
+    :root {
+      --primary-color: #FF5722;
+      --secondary-color: #FFC107;
+      --bg-color: #F8F9FA;
+      --text-color: #212121;
+      --card-bg: #fff;
+      --nav-bg: #fff;
+      --border-color: #ddd;
+      --shadow: rgba(0,0,0,0.1);
+    }
+
+    [data-theme="dark"] {
+      --primary-color: #FF7043;
+      --secondary-color: #FFD54F;
+      --bg-color: #121212;
+      --text-color: #E0E0E0;
+      --card-bg: #1E1E1E;
+      --nav-bg: #1E1E1E;
+      --border-color: #333;
+      --shadow: rgba(0,0,0,0.3);
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: 'Cairo', sans-serif;
+      background-color: var(--bg-color);
+      color: var(--text-color);
+      transition: background-color 0.3s ease, color 0.3s ease;
+    }
+
+    header {
+      height: 100vh;
+      background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0,0,0,0.7)), url('coach.jpg') center/cover no-repeat;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      padding: 2rem;
+      color: #fff;
+    }
+
+    header h1 {
+      font-size: 3.5rem;
+      color: var(--secondary-color);
+      margin-bottom: 1rem;
+    }
+
+    header p {
+      font-size: 1.5rem;
+      max-width: 700px;
+    }
+
+    nav {
+      position: fixed;
+      top: 0;
+      width: 100%;
+      background-color: var(--nav-bg);
+      padding: 1rem 2rem;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 2rem;
+      z-index: 1000;
+      border-bottom: 1px solid var(--border-color);
+      transition: background-color 0.3s ease, border-color 0.3s ease;
+    }
+
+    nav a {
+      color: var(--text-color);
+      text-decoration: none;
+      font-weight: bold;
+      transition: color 0.3s;
+    }
+
+    nav a:hover {
+      color: var(--primary-color);
+    }
+
+    .theme-toggle {
+      background: none;
+      border: 2px solid var(--primary-color);
+      color: var(--text-color);
+      padding: 0.5rem 1rem;
+      border-radius: 25px;
+      cursor: pointer;
+      font-family: 'Cairo', sans-serif;
+      font-weight: bold;
+      transition: all 0.3s ease;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .theme-toggle:hover {
+      background-color: var(--primary-color);
+      color: white;
+    }
+
+    .theme-toggle .icon {
+      font-size: 1.2rem;
+    }
+
+    section {
+      padding: 5rem 2rem;
+      max-width: 1000px;
+      margin: auto;
+    }
+
+    section h2 {
+      font-size: 2.2rem;
+      color: var(--primary-color);
+      border-bottom: 2px solid var(--secondary-color);
+      display: inline-block;
+      margin-bottom: 2rem;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 2rem;
+    }
+
+    .card {
+      background: var(--card-bg);
+      padding: 1.5rem;
+      border: 2px solid var(--secondary-color);
+      border-radius: 10px;
+      box-shadow: 0 4px 10px var(--shadow);
+      transition: transform 0.3s ease, background-color 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .card:hover {
+      transform: translateY(-5px);
+    }
+
+    .whatsapp {
+      display: inline-block;
+      margin-top: 2rem;
+      background-color: #25D366;
+      color: white;
+      padding: 0.75rem 1.5rem;
+      font-weight: bold;
+      border-radius: 8px;
+      text-decoration: none;
+      transition: background-color 0.3s;
+    }
+
+    .whatsapp:hover {
+      background-color: #1ebc5b;
+    }
+
+    footer {
+      background: var(--card-bg);
+      padding: 2rem;
+      text-align: center;
+      border-top: 2px solid var(--primary-color);
+      color: var(--text-color);
+      transition: background-color 0.3s ease, color 0.3s ease;
+    }
+
+    a {
+      color: var(--primary-color);
+      text-decoration: none;
+    }
+
+    ul {
+      list-style: none;
+      padding: 0;
+    }
+
+    ul li {
+      margin: 0.5rem 0;
+      padding-right: 1.5rem;
+      position: relative;
+    }
+
+    ul li:before {
+      content: "•";
+      color: var(--secondary-color);
+      position: absolute;
+      right: 0;
+      font-weight: bold;
+    }
+    /* ====== قسم النتائج ====== */
+.gallery-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  grid-auto-rows: 200px;
+  gap: 1rem;
+  grid-auto-flow: dense;
+}
+
+.gallery-item {
+  overflow: hidden;
+  border-radius: 16px;
+  box-shadow: 0 4px 12px var(--shadow);
+  transform: rotateZ(-1deg);
+  opacity: 0;
+  animation: fadeInUp 0.6s ease forwards;
+}
+
+.gallery-item:hover {
+  transform: scale(1.03) rotateZ(0deg);
+  z-index: 2;
+}
+
+.gallery-item img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: grayscale(80%);
+  transition: filter 0.4s ease, transform 0.4s ease;
+  cursor: pointer;
+}
+
+.gallery-item:hover img {
+  filter: grayscale(0%);
+  transform: scale(1.05);
+}
+
+.gallery-item.wide {
+  grid-column: span 2;
+}
+
+.gallery-item.tall {
+  grid-row: span 2;
+}
+
+@keyframes fadeInUp {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  from {
+    opacity: 0;
+    transform: translateY(20px) rotateZ(-2deg);
+  }
+}
+
+/* Lightbox styles */
+#lightbox {
+  display: none;
+  position: fixed;
+  z-index: 9999;
+  top: 0; right: 0; bottom: 0; left: 0;
+  background: rgba(0,0,0,0.8);
+  justify-content: center;
+  align-items: center;
+}
+
+#lightbox img {
+  max-width: 90%;
+  max-height: 90%;
+  border-radius: 10px;
+  box-shadow: 0 0 30px rgba(255,255,255,0.2);
+  animation: zoomIn 0.4s ease;
+}
+
+@media (hover: none) and (pointer: coarse) {
+  .gallery-item img {
+    filter: none !important;
+  }
+}
+
+@keyframes zoomIn {
+  from { transform: scale(0.7); opacity: 0; }
+  to { transform: scale(1); opacity: 1; }
+}
+/* شات */
+.testimonial-3d-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 2rem;
+  padding: 1rem;
+  perspective: 1000px;
+}
+
+.card-3d {
+  background: transparent;
+  perspective: 1000px;
+  touch-action: manipulation;
+}
+
+.card-inner {
+  background-color: var(--card-bg);
+  border: 2px solid var(--primary-color);
+  padding: 1.5rem;
+  border-radius: 16px;
+  box-shadow: 0 10px 25px var(--shadow);
+  transform-style: preserve-3d;
+  transition: transform 0.4s ease;
+  will-change: transform;
+}
+
+.card-3d:hover .card-inner {
+  transform: rotateY(10deg) rotateX(5deg);
+}
+
+.card-inner p {
+  font-size: 1.1rem;
+  margin-bottom: 1rem;
+}
+
+.card-inner h4 {
+  font-size: 0.95rem;
+  color: var(--primary-color);
+  text-align: right;
+}
+
+
+
+  </style>
+</head>
+<body>
+  <nav>
+    <!-- <a href="#services">الخدمات</a> -->
+    <a href="#plans">الباقات</a>
+    <a href="#results">نتائج عملائنا</a> 
+    <a href="#about">المدرب</a>
+    <!-- <a href="#contact">تواصل</a> -->
+    <button class="theme-toggle" onclick="toggleTheme()">
+      <span class="icon" id="theme-icon">🌙</span>
+      <span id="theme-text">الوضع الليلي</span>
+    </button>
+  </nav>
+
+  <header data-aos="fade-up">
+    <h1>محمود لبيب</h1>
+    <p>مدرب معتمد | خبير تغذية | بطل فيزيك</p>
+    <a class="whatsapp" href="https://wa.me/201234567890" target="_blank">💬 احجز على واتساب</a>
+  </header>
+
+  <section id="about" data-aos="fade-up">
+    <h2>عن المدرب</h2>
+    <p>
+      محمود لبيب، مدرب شخصي معتمد من NASM، وخبير تغذية رياضية، وبطل فيزيك لعام 2024.
+      بخبرة قوية في تصميم خطط التدريب والكورسات الدقيقة، يقدم محمود خدمات مخصصة لتحقيق نتائج حقيقية.
+    </p>
+    <ul>
+      <li>📍 العمر: 23 سنة</li>
+      <li>🌍 العمل: أونلاين داخل وخارج مصر</li>
+      <li>🗣️ اللغات: العربية – الإنجليزية (جيد جدًا)</li>
+      <li>🥇 المركز الأول – بطولة فيزيك 2024</li>
+      <li>🏅 المركز الرابع – فئة مختلفة</li>
+    </ul>
+  </section>
+
+  <section id="plans" data-aos="fade-up">
+    <a href="plans-details.html"><h2>الباقات التدريبية</h2></a>
+    <div class="grid">
+      <div class="card">
+        <h3>باقة 6 أسابيع – 2000 جنيه</h3>
+        <ul>
+          <li>✅ خطة ستيرويد محسوبة</li>
+          <li>✅ جدول تمرين لهدف الكورس</li>
+          <li>✅ نظام غذائي داعم</li>
+          <li>✅ خطة مكملات للكبد والهرمونات</li>
+          <li>✅ متابعة يومية على واتساب</li>
+          <li>✅ شرح الأعراض الجانبية</li>
+        </ul>
+      </div>
+      <div class="card">
+        <h3>باقة 3 شهور – 4000 جنيه</h3>
+        <ul>
+          <li>✅ خطة مفصلة لكل مرحلة</li>
+          <li>✅ نظام غذائي أسبوعي</li>
+          <li>✅ جدول تمرين متجدد</li>
+          <li>✅ دعم شامل ومتابعة</li>
+          <li>✅ مكالمة صوتية كل شهر</li>
+        </ul>
+      </div>
+      <div class="card">
+        <h3>باقة 6 شهور – 8000 جنيه</h3>
+        <ul>
+          <li>✅ برنامج Bulking + Cutting + PCT</li>
+          <li>✅ خطط غذائية وتدريبية</li>
+          <li>✅ دعم طبي وتوجيه آمن</li>
+          <li>✅ تقييم شامل ومتابعة</li>
+          <li>✅ مكالمتان شهريًا</li>
+        </ul>
+      </div>
+      <div class="card">
+        <h3>باقة 3 شهور – 3000 جنيه</h3>
+        <ul>
+          <li>✅ نظام غذائي متجدد</li>
+          <li>✅ جدولين تمرين</li>
+          <li>✅ خطة مكملات</li>
+          <li>✅ مراجعة أسبوعية</li>
+          <li>➕ تأهيل إصابات +500 جنيه</li>
+        </ul>
+      </div>
+    </div>
+    <div style="text-align: center; margin-top: 3rem;">
+      <a href="plans-details.html" class="whatsapp" style="background-color: var(--primary-color); display: inline-block;">
+        📋 عرض جميع الخطط بالتفصيل
+      </a>
+    </div>
+  </section>
+  <!-- ====== نتائج عملائنا ====== -->
+  <section id="results" data-aos="fade-up" style="background-color: var(--bg-color); padding: 5rem 2rem;">
+    <h2 style="text-align: center; margin-bottom: 3rem;">نتائج عملائنا</h2>
+
+    <div class="gallery-grid">
+      <div class="gallery-item wide">
+        <img src="result1.jpg" alt="نتيجة عميل" onclick="openLightbox(this)">
+      </div>
+      <div class="gallery-item tall">
+        <img src="result2.jpg" alt="نتيجة عميل" onclick="openLightbox(this)">
+      </div>
+      <div class="gallery-item">
+        <img src="result1.jpg" alt="نتيجة عميل" onclick="openLightbox(this)">
+      </div>
+      <div class="gallery-item">
+        <img src="result2.jpg" alt="نتيجة عميل" onclick="openLightbox(this)">
+      </div>
+      <!-- زود الصور براحتك -->
+    </div>
+
+    <!-- Lightbox -->
+    <div id="lightbox" onclick="closeLightbox()">
+      <img id="lightbox-img" src="" alt="تكبير الصورة" />
+    </div>
+  </section>
+
+<section id="testimonials" data-aos="fade-up">
+  <h2 style="text-align: center; margin-bottom: 2rem;">آراء عملائنا</h2>
+  <div class="testimonial-3d-grid">
+    <div class="card-3d">
+      <div class="card-inner">
+        <p>💬 "النتائج كانت مذهلة! شكراً على الدعم."</p>
+        <h4>– ندى، مصر</h4>
+      </div>
+    </div>
+    <div class="card-3d">
+      <div class="card-inner">
+        <p>💬 "أقوى برنامج مشيت عليه. متابعة دقيقة."</p>
+        <h4>– فهد، السعودية</h4>
+      </div>
+    </div>
+    <div class="card-3d">
+      <div class="card-inner">
+        <p>💬 "برنامج متكامل ونتائجه واضحة من أسبوعين بس!"</p>
+        <h4>– هالة، الكويت</h4>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+
+
+
+  <section id="contact" data-aos="fade-up">
+    <h2>تواصل معنا</h2>
+    <p>📧 البريد: <a href="mailto:labib.coach@gmail.com">labib.coach@gmail.com</a></p>
+    <p>📸 انستجرام: <a href="https://instagram.com/labib_fitness" target="_blank">@labib_fitness</a></p>
+  </section>
+
+  <footer>
+    &copy; 2025 محمود لبيب. لا أعذار، فقط نتائج.
+  </footer>
+
+  <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/vanilla-tilt@1.7.2/dist/vanilla-tilt.min.js"></script>
+  <script>
+    AOS.init({ once: true });
+
+    // Dark mode functionality
+    function toggleTheme() {
+      const html = document.documentElement;
+      const themeIcon = document.getElementById('theme-icon');
+      const themeText = document.getElementById('theme-text');
+      
+      if (html.getAttribute('data-theme') === 'dark') {
+        html.removeAttribute('data-theme');
+        themeIcon.textContent = '🌙';
+        themeText.textContent = 'الوضع الليلي';
+        localStorage.setItem('theme', 'light');
+      } else {
+        html.setAttribute('data-theme', 'dark');
+        themeIcon.textContent = '☀️';
+        themeText.textContent = 'الوضع النهاري';
+        localStorage.setItem('theme', 'dark');
+      }
+    }
+
+    // Load saved theme preference
+    function loadTheme() {
+      const savedTheme = localStorage.getItem('theme');
+      const themeIcon = document.getElementById('theme-icon');
+      const themeText = document.getElementById('theme-text');
+      
+      if (savedTheme === 'dark') {
+        document.documentElement.setAttribute('data-theme', 'dark');
+        themeIcon.textContent = '☀️';
+        themeText.textContent = 'الوضع النهاري';
+      }
+    }
+
+    // Initialize theme on page load
+    loadTheme();
+
+      function openLightbox(img) {
+      const lightbox = document.getElementById('lightbox');
+      const lightboxImg = document.getElementById('lightbox-img');
+      lightboxImg.src = img.src;
+      lightbox.style.display = 'flex';
+      document.body.style.overflow = 'hidden'; // منع تمرير الصفحة
+    }
+
+    function closeLightbox() {
+      const lightbox = document.getElementById('lightbox');
+      lightbox.style.display = 'none';
+      document.body.style.overflow = ''; // إعادة التمرير
+    }
+
+    VanillaTilt.init(document.querySelectorAll(".card-inner"), {
+      max: 15,
+      speed: 400,
+      glare: true,
+      "max-glare": 0.2,
+      scale: 1.03,
+    });
+
+  </script>
+</body>
+</html>

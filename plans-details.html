@@ -1,0 +1,428 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>الباقات</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://unpkg.com/aos@2.3.1/dist/aos.css" />
+  <style>
+  :root {
+    --primary-color: #FF5722;
+    --secondary-color: #FFC107;
+    --bg-color: #F8F9FA;
+    --text-color: #212121;
+    --card-bg: #fff;
+    --nav-bg: #fff;
+    --border-color: #ddd;
+    --shadow: rgba(0, 0, 0, 0.1);
+  }
+
+  [data-theme="dark"] {
+    --primary-color: #FF7043;
+    --secondary-color: #FFD54F;
+    --bg-color: #121212;
+    --text-color: #E0E0E0;
+    --card-bg: #1E1E1E;
+    --nav-bg: #1E1E1E;
+    --border-color: #333;
+    --shadow: rgba(0, 0, 0, 0.3);
+  }
+
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+
+  html {
+    margin: 0;
+    padding: 0;
+    scroll-behavior: smooth;
+    transition: background-color 0.3s ease, color 0.3s ease;
+  }
+
+  body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Cairo', sans-serif;
+    background-color: var(--bg-color);
+    color: var(--text-color);
+  }
+
+  a {
+    color: var(--primary-color);
+    text-decoration: none;
+  }
+
+  [data-theme="dark"] a {
+    color: var(--secondary-color);
+  }
+
+  section {
+    padding: 5rem 2rem;
+    max-width: 1000px;
+    margin: auto;
+  }
+
+  @media (max-width: 600px) {
+    section {
+      padding: 2.5rem 1rem;
+    }
+  }
+
+
+  nav {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    background-color: var(--nav-bg);
+    padding: 1rem 2rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 2rem;
+    z-index: 1000;
+    border-bottom: 1px solid var(--border-color);
+    transition: background-color 0.3s ease, border-color 0.3s ease;
+  }
+
+  nav a {
+    color: var(--text-color);
+    font-weight: bold;
+    transition: color 0.3s;
+  }
+
+  nav a:hover {
+    color: var(--primary-color);
+  }
+
+  .theme-toggle {
+    background: none;
+    border: 2px solid var(--primary-color);
+    color: var(--text-color);
+    padding: 0.5rem 1rem;
+    border-radius: 25px;
+    cursor: pointer;
+    font-family: 'Cairo', sans-serif;
+    font-weight: bold;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .theme-toggle:hover {
+    background-color: var(--primary-color);
+    color: white;
+  }
+
+  .theme-toggle .icon {
+    font-size: 1.2rem;
+  }
+
+  .pricing-card {
+    background: var(--card-bg);
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    box-shadow: 0 4px 10px var(--shadow);
+    margin-bottom: 1.5rem;
+    overflow: hidden;
+  }
+
+  .card-header {
+    background: var(--primary-color);
+    color: white;
+    padding: 1rem;
+    text-align: center;
+    font-weight: bold;
+    font-size: 1.25rem;
+  }
+
+  .price-circle {
+    background: var(--text-color);
+    color: var(--card-bg);
+    width: 120px;
+    height: 120px;
+    margin: 1rem auto;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    font-size: 1.2rem;
+  }
+
+  .section-title {
+  background: linear-gradient(to left, var(--secondary-color), var(--primary-color));
+  padding: 0.6rem 1rem;
+  font-weight: bold;
+  color: #fff;
+  border-radius: 12px;
+  margin: 0 1rem 1rem;
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  box-shadow: 0 3px 6px var(--shadow);
+}
+
+/* الوضع الليلي */
+[data-theme="dark"] .section-title {
+  background: linear-gradient(to left, #FFD54F, #FF7043);
+  color: #000;
+}
+
+  ul.features {
+    list-style: none;
+    padding: 1rem;
+    margin: 0;
+  }
+
+  ul.features li {
+    margin-bottom: 0.8rem;
+    padding-right: 1.5rem;
+    position: relative;
+  }
+
+  ul.features li::before {
+    content: "✅";
+    position: absolute;
+    right: 0;
+  }
+
+  .order-btn {
+    background: var(--primary-color);
+    color: white;
+    border: none;
+    padding: 0.8rem;
+    width: 90%;
+    margin: 1rem auto;
+    display: block;
+    text-align: center;
+    border-radius: 8px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease, color 0.3s ease;
+  }
+
+  .order-btn:hover {
+    background-color: var(--secondary-color);
+    color: black;
+  }
+
+  [data-theme="dark"] .order-btn:hover {
+    background-color: var(--secondary-color);
+    color: black;
+  }
+
+  .cards-container {
+    margin-top: 40px;
+  }
+
+  /* header */
+
+  header {
+  margin-top: 120px;
+  padding: 2rem 1.5rem;
+  text-align: center;
+  background: linear-gradient(to left, var(--primary-color), var(--secondary-color));
+  color: white;
+  border-radius: 12px;
+  box-shadow: 0 4px 10px var(--shadow);
+  transition: background 0.3s ease;
+}
+
+[data-theme="dark"] header {
+  background: linear-gradient(to left, #FF7043, #FFD54F);
+  color: #000;
+}
+
+header h1 {
+  font-size: 2rem;
+  margin-bottom: 1rem;
+  font-weight: 700;
+}
+
+header p {
+  font-size: 1.1rem;
+  font-weight: 400;
+  line-height: 1.6;
+}
+
+
+  @media(min-width: 768px) {
+    .cards-container {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1rem;
+    }
+  }
+</style>
+
+</head>
+<body>
+    <nav>
+        <!-- <a href="#services">الخدمات</a> -->
+        <a href="#plans">من نحن</a>
+        <a href="#results">طلب استشارة</a> 
+        <a href="#about">اراء العملاء</a>
+        <!-- <a href="#contact">تواصل</a> -->
+        <button class="theme-toggle" onclick="toggleTheme()">
+        <span class="icon" id="theme-icon">🌙</span>
+        <span id="theme-text">الوضع الليلي</span>
+        </button>
+    </nav>
+
+    <header>
+        <h1>مرحبًا بك في باقاتنا</h1>
+        <p>اختر الباقة التي تناسبك وابدأ رحلتك نحو هدفك</p>
+    </header>
+
+    <section id="cards" data-aos="fade-up">
+        <div class="cards-container">
+            <!-- باقة 6 شهور رياضية -->
+            <div class="pricing-card">
+            <div class="card-header">باقة 6 شهور</div>
+            <div class="price-circle">
+                <div>6000</div>
+                <small>جنيه</small>
+            </div>
+            <div class="section-title">المميزات</div>
+            <ul class="features">
+                <li>4 جداول تمرين متدرجة حسب تطورك</li>
+                <li>نظام غذائي مرن بيتحدث أسبوعيًا</li>
+                <li>خطة مكملات مفصلة (أساسية + اختيارية)</li>
+                <li>تقييم شامل كل أسبوع</li>
+                <li>مكالمتين شهريًا صوت أو فيديو للمراجعة</li>
+                <li>أولوية في الرد والدعم اليومي</li>
+                <li>➕ تأهيل إصابات (اختياري): +500 جنيه</li>
+            </ul>
+            <a href="order.html" class="order-btn">اطلب الآن</a>
+            </div>
+
+            <!-- باقة 6 أسابيع كورس -->
+            <div class="pricing-card">
+            <div class="card-header">باقة 6 أسابيع</div>
+            <div class="price-circle">
+                <div>2000</div>
+                <small>جنيه</small>
+            </div>
+            <div class="section-title">المميزات</div>
+            <ul class="features">
+                <li>خطة ستيرويد/كورسات محسوبة بالملي</li>
+                <li>جدول تمرين مكثف لهدف الكورس</li>
+                <li>نظام غذائي داعم للهرمونات</li>
+                <li>خطة مكملات داعمة للكورس والكبد والهرمونات</li>
+                <li>متابعة يومية على واتساب</li>
+                <li>شرح الأعراض الجانبية وطريقة التعامل معها</li>
+            </ul>
+            <a href="order.html" class="order-btn">اطلب الآن</a>
+            </div>
+
+            <!-- باقة 3 شهور كورس -->
+            <div class="pricing-card">
+            <div class="card-header">باقة 3 شهور</div>
+            <div class="price-circle">
+                <div>4000</div>
+                <small>جنيه</small>
+            </div>
+            <div class="section-title">المميزات</div>
+            <ul class="features">
+                <li>خطة مفصلة لكل مرحلة (بداية – وسط – PCT)</li>
+                <li>نظام غذائي متجدد أسبوعيًا</li>
+                <li>جدول تمرين يتغير حسب تطورك</li>
+                <li>دعم شامل لأي أعراض أو تعديلات في الكورس</li>
+                <li>متابعة يومية مكثفة</li>
+                <li>مكالمة تقييم صوتية كل شهر</li>
+            </ul>
+            <a href="order.html" class="order-btn">اطلب الآن</a>
+            </div>
+
+            <!-- باقة 6 شهور كورس -->
+            <div class="pricing-card">
+            <div class="card-header">باقة 6 شهور كورس</div>
+            <div class="price-circle">
+                <div>8000</div>
+                <small>جنيه</small>
+            </div>
+            <div class="section-title">المميزات</div>
+            <ul class="features">
+                <li>برنامج كامل مقسم مراحل (Bulking – Cutting – PCT)</li>
+                <li>خطط غذائية وتدريبية متطورة</li>
+                <li>دعم طبي وتوجيه لاستخدام آمن نسبيًا</li>
+                <li>جدول مكملات مع كل مرحلة</li>
+                <li>متابعة يومية + تقييم شامل</li>
+                <li>مكالمتين شهريًا لمراجعة النتائج وتعديل الخط</li>
+            </ul>
+            <a href="order.html" class="order-btn">اطلب الآن</a>
+            </div>
+
+        </div>
+    </section>
+
+  <section id="contact" data-aos="fade-up">
+    <h2>تواصل معنا</h2>
+    <p>📧 البريد: <a href="mailto:labib.coach@gmail.com">labib.coach@gmail.com</a></p>
+    <p>📸 انستجرام: <a href="https://instagram.com/labib_fitness" target="_blank">@labib_fitness</a></p>
+  </section>
+
+  <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+  <script>
+    AOS.init({ once: true });
+
+    // Dark mode functionality
+    function toggleTheme() {
+      const html = document.documentElement;
+      const themeIcon = document.getElementById('theme-icon');
+      const themeText = document.getElementById('theme-text');
+      
+      if (html.getAttribute('data-theme') === 'dark') {
+        html.removeAttribute('data-theme');
+        themeIcon.textContent = '🌙';
+        themeText.textContent = 'الوضع الليلي';
+        localStorage.setItem('theme', 'light');
+      } else {
+        html.setAttribute('data-theme', 'dark');
+        themeIcon.textContent = '☀️';
+        themeText.textContent = 'الوضع النهاري';
+        localStorage.setItem('theme', 'dark');
+      }
+    }
+
+    // Load saved theme preference
+    function loadTheme() {
+      const savedTheme = localStorage.getItem('theme');
+      const themeIcon = document.getElementById('theme-icon');
+      const themeText = document.getElementById('theme-text');
+      
+      if (savedTheme === 'dark') {
+        document.documentElement.setAttribute('data-theme', 'dark');
+        themeIcon.textContent = '☀️';
+        themeText.textContent = 'الوضع النهاري';
+      }
+    }
+
+    // Initialize theme on page load
+    loadTheme();
+
+      function openLightbox(img) {
+      const lightbox = document.getElementById('lightbox');
+      const lightboxImg = document.getElementById('lightbox-img');
+      lightboxImg.src = img.src;
+      lightbox.style.display = 'flex';
+      document.body.style.overflow = 'hidden'; // منع تمرير الصفحة
+    }
+
+    function closeLightbox() {
+      const lightbox = document.getElementById('lightbox');
+      lightbox.style.display = 'none';
+      document.body.style.overflow = ''; // إعادة التمرير
+    }
+
+  </script>
+</body>
+</html>
