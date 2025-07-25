@@ -1,248 +1,326 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>طلب الباقة - نمط محادثة</title>
-  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&display=swap" rel="stylesheet">
-  <style>
-    :root {
-      --primary-color: #FF5722;
-      --secondary-color: #FFC107;
-      --bg-color: #f4f4f4;
-      --bubble-color: #fff;
-      --bubble-user: #e0f7fa;
-      --text-color: #212121;
-    }
-
-    body {
-      font-family: 'Cairo', sans-serif;
-      margin: 0;
-      background-color: var(--bg-color);
-      display: flex;
-      flex-direction: column;
-      height: calc(var(--vh, 1vh) * 100);
-    }
-
-    .chat-container {
-      flex: 1;
-      overflow-y: auto;
-      padding: 1rem;
-      display: flex;
-      flex-direction: column;
-    }
-
-    .bubble {
-      max-width: 80%;
-      padding: 0.8rem 1rem;
-      margin: 0.4rem 0;
-      border-radius: 1rem;
-      background-color: var(--bubble-color);
-      color: var(--text-color);
-      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
-    }
-
-    .bubble.user {
-      align-self: flex-start;
-      background-color: var(--bubble-user);
-    }
-
-    .form-input {
-      display: flex;
-      flex-direction: column;
-      margin-top: 0.5rem;
-    }
-
-    input, select, textarea, button {
-      font-family: inherit;
-      font-size: 1rem;
-      margin-top: 0.3rem;
-      padding: 0.7rem;
-      border-radius: 8px;
-      border: 1px solid #ccc;
-      width: 100%;
-    }
-
-    button {
-      background-color: var(--primary-color);
-      color: white;
-      border: none;
-      cursor: pointer;
-      transition: background 0.3s;
-    }
-
-    button:hover {
-      background-color: #e64a19;
-    }
-
-    .chat-footer {
-      padding: 1rem;
-      border-top: 1px solid #ddd;
-      background-color: #fff;
-      display: flex;
-      justify-content: space-between;
-      gap: 1rem;
-    }
-
-    .preview-img {
-      max-width: 100%;
-      margin-top: 0.5rem;
-      border-radius: 8px;
-    }
-
-    .hidden {
-      display: none;
-    }
-  </style>
-</head>
-<body>
-  <div class="chat-container" id="chat"></div>
-
-  <div class="chat-footer">
-    <button id="restartBtn">إعادة</button>
-    <button id="nextBtn">التالي</button>
-  </div>
-
-  <script>
-    const chat = document.getElementById('chat');
-    const nextBtn = document.getElementById('nextBtn');
-    const restartBtn = document.getElementById('restartBtn');
-
-    const steps = [
-      { id: 'name', label: 'ما اسمك الكامل؟', type: 'text' },
-      { id: 'gender', label: 'ما نوعك؟', type: 'select', options: ['ذكر', 'أنثى'] },
-      { id: 'age', label: 'كم عمرك؟', type: 'number' },
-      { id: 'phone', label: 'رقم هاتفك؟', type: 'tel' },
-      { id: 'email', label: 'بريدك الإلكتروني؟', type: 'email' },
-      { id: 'location', label: 'مكان إقامتك الحالي؟', type: 'text' },
-      { id: 'height', label: 'ما طولك بالسنتيمتر؟', type: 'number' },
-      { id: 'weight', label: 'ووزنك بالكيلوجرام؟', type: 'number' },
-      { id: 'job', label: 'ما طبيعة عملك؟', type: 'text' },
-      { id: 'best_time', label: 'ما هو أنسب وقت للتمرين؟', type: 'text' },
-      { id: 'training_place', label: 'أين تفضل التمرين؟', type: 'text' },
-      { id: 'level', label: 'ما هو مستواك التدريبي؟', type: 'select', options: ['مبتدئ', 'متوسط', 'متقدم'] },
-      { id: 'used_supplements', label: 'هل استخدمت مكملات من قبل؟', type: 'select', options: ['نعم', 'لا'] },
-      { id: 'used_hormones', label: 'هل استخدمت هرمونات من قبل؟', type: 'select', options: ['نعم', 'لا'] },
-      { id: 'injuries', label: 'هل لديك إصابات؟', type: 'textarea' },
-      { id: 'health_status', label: 'تفاصيل عن حالتك الصحية؟', type: 'textarea' },
-      { id: 'medical_tests', label: 'ارفع صورة تحاليل إن وجدت', type: 'file', preview: true },
-      { id: 'front_image', label: 'ارفع صورة أمامية لجسمك', type: 'file', preview: true },
-      { id: 'side_image', label: 'ارفع صورة جانبية لجسمك', type: 'file', preview: true },
-      { id: 'back_image', label: 'ارفع صورة خلفية لجسمك', type: 'file', preview: true },
-      { id: 'goal', label: 'ما هو هدفك من التمرين؟', type: 'textarea' }
-    ];
-
-
-    let step = 0;
-    let answers = JSON.parse(localStorage.getItem('orderAnswers')) || {};
-
-    const renderStep = () => {
-      chat.innerHTML = '';
-      const greeting = document.createElement('div');
-      greeting.className = 'bubble';
-      greeting.textContent = 'مرحبًا 👋، أنا هنا لمساعدتك في طلب الباقة.';
-      chat.appendChild(greeting);
-
-      for (let i = 0; i < step; i++) {
-        const q = steps[i];
-        const qBubble = document.createElement('div');
-        qBubble.className = 'bubble';
-        qBubble.textContent = q.label;
-        chat.appendChild(qBubble);
-
-        const aBubble = document.createElement('div');
-        aBubble.className = 'bubble user';
-        aBubble.textContent = answers[q.id];
-        chat.appendChild(aBubble);
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>طلب الباقة - نمط محادثة</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        --primary-color: #ff5722;
+        --secondary-color: #ffc107;
+        --bg-color: #f4f4f4;
+        --bubble-color: #fff;
+        --bubble-user: #e0f7fa;
+        --text-color: #212121;
       }
 
-      if (step < steps.length) {
-        const q = steps[step];
-        const bubble = document.createElement('div');
-        bubble.className = 'bubble';
-        bubble.textContent = q.label;
-        chat.appendChild(bubble);
+      body {
+        font-family: "Cairo", sans-serif;
+        margin: 0;
+        background-color: var(--bg-color);
+        display: flex;
+        flex-direction: column;
+        height: calc(var(--vh, 1vh) * 100);
+      }
 
-        const inputWrapper = document.createElement('div');
-        inputWrapper.className = 'form-input';
+      .chat-container {
+        flex: 1;
+        overflow-y: auto;
+        padding: 1rem;
+        display: flex;
+        flex-direction: column;
+      }
 
-        if (q.type === 'select') {
-          const select = document.createElement('select');
-          select.id = q.id;
-          q.options.forEach(opt => {
-            const option = document.createElement('option');
-            option.value = opt;
-            option.textContent = opt;
-            select.appendChild(option);
-          });
-          inputWrapper.appendChild(select);
-        } else if (q.type === 'textarea') {
-          const textarea = document.createElement('textarea');
-          textarea.id = q.id;
-          inputWrapper.appendChild(textarea);
-        } else {
-          const input = document.createElement('input');
-          input.type = q.type;
-          input.id = q.id;
-          input.placeholder = q.placeholder || '';
-          if (q.type === 'file') input.accept = 'image/*';
-          inputWrapper.appendChild(input);
+      .bubble {
+        max-width: 80%;
+        padding: 0.8rem 1rem;
+        margin: 0.4rem 0;
+        border-radius: 1rem;
+        background-color: var(--bubble-color);
+        color: var(--text-color);
+        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+      }
+
+      .bubble.user {
+        align-self: flex-start;
+        background-color: var(--bubble-user);
+      }
+
+      .form-input {
+        display: flex;
+        flex-direction: column;
+        margin-top: 0.5rem;
+      }
+
+      input,
+      select,
+      textarea,
+      button {
+        font-family: inherit;
+        font-size: 1rem;
+        margin-top: 0.3rem;
+        padding: 0.7rem;
+        border-radius: 8px;
+        border: 1px solid #ccc;
+        width: 100%;
+      }
+
+      button {
+        background-color: var(--primary-color);
+        color: white;
+        border: none;
+        cursor: pointer;
+        transition: background 0.3s;
+      }
+
+      button:hover {
+        background-color: #e64a19;
+      }
+
+      .chat-footer {
+        padding: 1rem;
+        border-top: 1px solid #ddd;
+        background-color: #fff;
+        display: flex;
+        justify-content: space-between;
+        gap: 1rem;
+      }
+
+      .preview-img {
+        max-width: 100%;
+        margin-top: 0.5rem;
+        border-radius: 8px;
+      }
+
+      .hidden {
+        display: none;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="chat-container" id="chat"></div>
+
+    <div class="chat-footer">
+      <button id="restartBtn">إعادة</button>
+      <button id="nextBtn">التالي</button>
+    </div>
+
+    <script>
+      const chat = document.getElementById("chat");
+      const nextBtn = document.getElementById("nextBtn");
+      const restartBtn = document.getElementById("restartBtn");
+
+      const steps = [
+        { id: "name", label: "ما اسمك الكامل؟", type: "text" },
+        {
+          id: "gender",
+          label: "ما نوعك؟",
+          type: "select",
+          options: ["ذكر", "أنثى"],
+        },
+        { id: "age", label: "كم عمرك؟", type: "number" },
+        { id: "phone", label: "رقم هاتفك؟", type: "tel" },
+        { id: "email", label: "بريدك الإلكتروني؟", type: "email" },
+        { id: "location", label: "مكان إقامتك الحالي؟", type: "text" },
+        { id: "height", label: "ما طولك بالسنتيمتر؟", type: "number" },
+        { id: "weight", label: "ووزنك بالكيلوجرام؟", type: "number" },
+        { id: "job", label: "ما طبيعة عملك؟", type: "text" },
+        { id: "best_time", label: "ما هو أنسب وقت للتمرين؟", type: "text" },
+        { id: "training_place", label: "أين تفضل التمرين؟", type: "text" },
+        {
+          id: "level",
+          label: "ما هو مستواك التدريبي؟",
+          type: "select",
+          options: ["مبتدئ", "متوسط", "متقدم"],
+        },
+        {
+          id: "used_supplements",
+          label: "هل استخدمت مكملات من قبل؟",
+          type: "select",
+          options: ["نعم", "لا"],
+        },
+        {
+          id: "used_hormones",
+          label: "هل استخدمت هرمونات من قبل؟",
+          type: "select",
+          options: ["نعم", "لا"],
+        },
+        { id: "injuries", label: "هل لديك إصابات؟", type: "textarea" },
+        {
+          id: "health_status",
+          label: "تفاصيل عن حالتك الصحية؟",
+          type: "textarea",
+        },
+        {
+          id: "medical_tests",
+          label: "ارفع صورة تحاليل إن وجدت",
+          type: "file",
+          preview: true,
+        },
+        {
+          id: "front_image",
+          label: "ارفع صورة أمامية لجسمك",
+          type: "file",
+          preview: true,
+        },
+        {
+          id: "side_image",
+          label: "ارفع صورة جانبية لجسمك",
+          type: "file",
+          preview: true,
+        },
+        {
+          id: "back_image",
+          label: "ارفع صورة خلفية لجسمك",
+          type: "file",
+          preview: true,
+        },
+        { id: "goal", label: "ما هو هدفك من التمرين؟", type: "textarea" },
+      ];
+
+      let step = 0;
+      let answers = JSON.parse(localStorage.getItem("orderAnswers")) || {};
+
+      const renderStep = () => {
+        chat.innerHTML = "";
+        const greeting = document.createElement("div");
+        greeting.className = "bubble";
+        greeting.textContent = "مرحبًا 👋، أنا هنا لمساعدتك في طلب الباقة.";
+        chat.appendChild(greeting);
+
+        for (let i = 0; i < step; i++) {
+          const q = steps[i];
+          const qBubble = document.createElement("div");
+          qBubble.className = "bubble";
+          qBubble.textContent = q.label;
+          chat.appendChild(qBubble);
+
+          const aBubble = document.createElement("div");
+          aBubble.className = "bubble user";
+          aBubble.textContent = answers[q.id];
+          chat.appendChild(aBubble);
         }
 
-        chat.appendChild(inputWrapper);
-      } else {
-        const finalBubble = document.createElement('div');
-        finalBubble.className = 'bubble';
-        finalBubble.textContent = '✅ تم جمع بياناتك بنجاح! سيتم التواصل معك قريبًا.';
-        chat.appendChild(finalBubble);
-        nextBtn.disabled = true;
-        localStorage.removeItem('orderAnswers');
+        if (step < steps.length) {
+          const q = steps[step];
+          const bubble = document.createElement("div");
+          bubble.className = "bubble";
+          bubble.textContent = q.label;
+          chat.appendChild(bubble);
+
+          const inputWrapper = document.createElement("div");
+          inputWrapper.className = "form-input";
+
+          if (q.type === "select") {
+            const select = document.createElement("select");
+            select.id = q.id;
+            q.options.forEach((opt) => {
+              const option = document.createElement("option");
+              option.value = opt;
+              option.textContent = opt;
+              select.appendChild(option);
+            });
+            inputWrapper.appendChild(select);
+          } else if (q.type === "textarea") {
+            const textarea = document.createElement("textarea");
+            textarea.id = q.id;
+            inputWrapper.appendChild(textarea);
+          } else {
+            const input = document.createElement("input");
+            input.type = q.type;
+            input.id = q.id;
+            input.placeholder = q.placeholder || "";
+            if (q.type === "file") input.accept = "image/*";
+            inputWrapper.appendChild(input);
+          }
+
+          chat.appendChild(inputWrapper);
+        } else {
+          const finalBubble = document.createElement("div");
+          finalBubble.className = "bubble";
+          finalBubble.textContent =
+            "✅ تم جمع بياناتك بنجاح! سيتم التواصل معك قريبًا.";
+          chat.appendChild(finalBubble);
+          nextBtn.disabled = true;
+          localStorage.removeItem("orderAnswers");
+        }
+
+        chat.scrollTop = chat.scrollHeight;
+      };
+
+      nextBtn.addEventListener("click", () => {
+        const prevInput = document.querySelector(
+          ".form-input input, .form-input select, .form-input textarea"
+        );
+        if (!prevInput) return;
+
+        if (prevInput.type === "file") {
+          const file = prevInput.files[0];
+          if (!file) return alert("يرجى اختيار ملف.");
+          answers[steps[step].id] = file.name;
+          const preview = document.createElement("img");
+          preview.className = "preview-img";
+          preview.src = URL.createObjectURL(file);
+          chat.appendChild(preview);
+        } else {
+          const value = prevInput.value.trim();
+          if (!value) return alert("من فضلك أدخل البيانات المطلوبة.");
+          answers[steps[step].id] = value;
+        }
+        localStorage.setItem("orderAnswers", JSON.stringify(answers));
+        step++;
+        renderStep();
+      });
+
+      restartBtn.addEventListener("click", () => {
+        localStorage.removeItem("orderAnswers");
+        step = 0;
+        answers = {};
+        nextBtn.disabled = false;
+        renderStep();
+      });
+
+      // إذا كانت هناك بيانات محفوظة، استكمل الخطوات تلقائيًا
+      if (Object.keys(answers).length > 0) {
+        step = Object.keys(answers).length;
       }
+      renderStep();
 
-      chat.scrollTop = chat.scrollHeight;
-    };
+      // التعامل مع زر Enter أو Go في الموبايل
+      document.addEventListener("keydown", (e) => {
+        if (e.key === "Enter") {
+          const activeElement = document.activeElement;
 
-    nextBtn.addEventListener('click', () => {
-      const prevInput = document.querySelector('.form-input input, .form-input select, .form-input textarea');
-      if (!prevInput) return;
+          // منع عمل سطر جديد في textarea
+          if (activeElement.tagName === "TEXTAREA") {
+            e.preventDefault();
+            nextBtn.click();
+          }
 
-      if (prevInput.type === 'file') {
-        const file = prevInput.files[0];
-        if (!file) return alert('يرجى اختيار ملف.');
-        answers[steps[step].id] = file.name;
-        const preview = document.createElement('img');
-        preview.className = 'preview-img';
-        preview.src = URL.createObjectURL(file);
-        chat.appendChild(preview);
-      } else {
-        const value = prevInput.value.trim();
-        if (!value) return alert('من فضلك أدخل البيانات المطلوبة.');
-        answers[steps[step].id] = value;
+          // لو input أو select
+          if (
+            activeElement.tagName === "INPUT" ||
+            activeElement.tagName === "SELECT"
+          ) {
+            e.preventDefault();
+            nextBtn.click();
+          }
+        }
+      });
+
+      // style
+      function setVh() {
+        document.documentElement.style.setProperty(
+          "--vh",
+          `${window.innerHeight * 0.01}px`
+        );
       }
-      localStorage.setItem('orderAnswers', JSON.stringify(answers));
-      step++;
-      renderStep();
-    });
-
-    restartBtn.addEventListener('click', () => {
-      localStorage.removeItem('orderAnswers');
-      step = 0;
-      answers = {};
-      nextBtn.disabled = false;
-      renderStep();
-    });
-
-    // إذا كانت هناك بيانات محفوظة، استكمل الخطوات تلقائيًا
-    if (Object.keys(answers).length > 0) {
-      step = Object.keys(answers).length;
-    }
-    renderStep();
-
-    function setVh() {
-      document.documentElement.style.setProperty('--vh', `${window.innerHeight * 0.01}px`);
-    }
-    setVh();
-    window.addEventListener('resize', setVh);
-  </script>
-</body>
+      setVh();
+      window.addEventListener("resize", setVh);
+    </script>
+  </body>
 </html>
