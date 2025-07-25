@@ -21,7 +21,7 @@
       background-color: var(--bg-color);
       display: flex;
       flex-direction: column;
-      height: 100vh;
+      height: calc(var(--vh, 1vh) * 100);
     }
 
     .chat-container {
@@ -237,6 +237,12 @@
       step = Object.keys(answers).length;
     }
     renderStep();
+
+    function setVh() {
+      document.documentElement.style.setProperty('--vh', `${window.innerHeight * 0.01}px`);
+    }
+    setVh();
+    window.addEventListener('resize', setVh);
   </script>
 </body>
 </html>
