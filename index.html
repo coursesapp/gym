@@ -328,6 +328,106 @@
   text-align: right;
 }
 
+.circle-grid {
+  display: flex;
+  justify-content: center;
+  gap: 2rem;
+  flex-wrap: wrap;
+}
+
+.circle-card {
+  width: 230px; /* أكبر من السابق */
+  height: 230px;
+  background: var(--card-bg);
+  border: 3px solid var(--secondary-color);
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  box-shadow: 0 6px 14px var(--shadow);
+  transition: transform 0.4s ease, box-shadow 0.4s ease;
+  position: relative;
+  cursor: pointer;
+  /* overflow: hidden;  */
+  padding: 1rem;
+}
+
+.circle-card:hover {
+  transform: scale(1.08);
+  box-shadow: 0 12px 20px var(--shadow);
+}
+
+.circle-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  max-width: 85%; /* يضمن إن الكلام ميخرجش برة */
+  margin: auto;
+}
+
+.circle-icon {
+  font-size: 3rem;
+  margin-bottom: 0.3rem;
+}
+
+.circle-card h3 {
+  font-size: 1rem;
+  color: var(--primary-color);
+  margin: 0.2rem 0;
+  line-height: 1.2;
+}
+
+.circle-card p {
+  font-size: 0.85rem;
+  color: var(--text-color);
+  line-height: 1.3;
+}
+
+.highlight {
+  border-color: var(--primary-color);
+  background: linear-gradient(145deg, var(--secondary-color) 0%, var(--card-bg) 100%);
+}
+
+.badge {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: var(--primary-color);
+  color: #fff;
+  font-size: 0.7rem;
+  padding: 0.2rem 0.5rem;
+  border-radius: 12px;
+  animation: pulse 1.5s infinite;
+}
+
+@keyframes pulse {
+  0% { transform: scale(1); opacity: 1; }
+  50% { transform: scale(1.1); opacity: 0.8; }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+/* استجابة للموبايل */
+@media (max-width: 480px) {
+  .circle-card {
+    width: 180px;
+    height: 180px;
+  }
+  .circle-icon {
+    font-size: 2.5rem;
+  }
+  .circle-card h3 {
+    font-size: 0.9rem;
+  }
+  .circle-card p {
+    font-size: 0.75rem;
+  }
+}
+
+
+
 
 
   </style>
@@ -366,7 +466,45 @@
     </ul>
   </section>
 
-  <section id="plans" data-aos="fade-up">
+<section id="premium-programs" data-aos="zoom-in" style="padding:5rem 2rem; text-align:center;">
+  <h2 style="font-size:2.2rem; color:var(--primary-color); margin-bottom:2rem; border-bottom:2px solid var(--secondary-color); display:inline-block;">
+    الباقات المميزة
+  </h2>
+
+  <div class="circle-grid">
+    <!-- باقات المتابعة -->
+    <div class="circle-card" onclick="location.href='plans-details.html'">
+      <div class="circle-content">
+        <div class="circle-icon">💪</div>
+        <h3>باقات المتابعة</h3>
+        <p>أكل + تمرين + مكملات</p>
+      </div>
+    </div>
+
+    <!-- الباقة الذهبية -->
+    <div class="circle-card highlight" onclick="location.href='gold-plans.html'">
+      <div class="badge">الأكثر طلبًا</div>
+      <div class="circle-content">
+        <div class="circle-icon">🏆</div>
+        <h3>الباقة الذهبية</h3>
+        <p>متابعة خاصة ونتائج مضمونة</p>
+      </div>
+    </div>
+
+    <!-- باقة التخسيس المكثف -->
+    <div class="circle-card" onclick="location.href='weight.html'">
+      <div class="circle-content">
+        <div class="circle-icon">🔥</div>
+        <h3>التخسيس المكثف</h3>
+        <p>بديل آمن لعمليات التكميم</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+
+  <!-- <section id="plans" data-aos="fade-up">
     <a href="plans-details.html"><h2>الباقات التدريبية</h2></a>
     <div class="grid">
       <div class="card">
@@ -416,7 +554,7 @@
         📋 عرض جميع الخطط بالتفصيل
       </a>
     </div>
-  </section>
+  </section> -->
   <!-- ====== نتائج عملائنا ====== -->
   <section id="results" data-aos="fade-up" style="background-color: var(--bg-color); padding: 5rem 2rem;">
     <h2 style="text-align: center; margin-bottom: 3rem;">نتائج عملائنا</h2>
