@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>باقة الاستشارة</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="https://unpkg.com/aos@2.3.1/dist/aos.css" />
+    <style>
+      :root {
+        --primary-color: #ff5722;
+        --secondary-color: #ffc107;
+        --bg-color: #f8f9fa;
+        --text-color: #212121;
+        --card-bg: #fff;
+        --nav-bg: #fff;
+        --border-color: #ddd;
+        --shadow: rgba(0, 0, 0, 0.1);
+      }
+
+      [data-theme="dark"] {
+        --primary-color: #ff7043;
+        --secondary-color: #ffd54f;
+        --bg-color: #121212;
+        --text-color: #e0e0e0;
+        --card-bg: #1e1e1e;
+        --nav-bg: #1e1e1e;
+        --border-color: #333;
+        --shadow: rgba(0, 0, 0, 0.3);
+      }
+
+      * { margin: 0; padding: 0; box-sizing: border-box; }
+
+      html { scroll-behavior: smooth; }
+
+      body { font-family: "Cairo", sans-serif; background-color: var(--bg-color); color: var(--text-color); }
+
+      a { color: var(--primary-color); text-decoration: none; }
+      [data-theme="dark"] a { color: var(--secondary-color); }
+
+      nav { position: fixed; top: 0; width: 100%; background-color: var(--nav-bg); padding: 1rem 2rem; display: flex; justify-content: center; align-items: center; gap: 0.75rem; z-index: 1000; border-bottom: 1px solid var(--border-color); transition: background-color 0.3s ease, border-color 0.3s ease; }
+      nav a { color: var(--text-color); font-weight: bold; transition: color 0.3s; }
+      nav a:hover { color: var(--primary-color); }
+
+      .theme-toggle { background: none; border: 2px solid var(--primary-color); color: var(--text-color); padding: 0.5rem 1rem; border-radius: 25px; cursor: pointer; font-family: "Cairo", sans-serif; font-weight: bold; transition: all 0.3s ease; display: flex; align-items: center; gap: 0.5rem; }
+      .theme-toggle:hover { background-color: var(--primary-color); color: white; }
+      .theme-toggle .icon { font-size: 1.2rem; }
+
+      header { margin-top: 120px; padding: 2rem 1.5rem; text-align: center; background: linear-gradient(to left, var(--primary-color), var(--secondary-color)); color: white; border-radius: 12px; box-shadow: 0 4px 10px var(--shadow); transition: background 0.3s ease; }
+      [data-theme="dark"] header { background: linear-gradient(to left, #ff7043, #ffd54f); color: #000; }
+      header h1 { font-size: 2rem; margin-bottom: 1rem; font-weight: 700; }
+      header p { font-size: 1.1rem; font-weight: 400; line-height: 1.6; }
+
+      section { padding: 5rem 2rem; max-width: 1000px; margin: auto; }
+
+      .pricing-card { background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 12px; box-shadow: 0 4px 10px var(--shadow); margin-bottom: 1.5rem; overflow: hidden; }
+      .card-header { background: var(--primary-color); color: white; padding: 1rem; text-align: center; font-weight: bold; font-size: 1.25rem; }
+      .price-circle { background: var(--text-color); color: var(--card-bg); width: 120px; height: 120px; margin: 1rem auto; border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-direction: column; font-size: 1.2rem; }
+      .section-title { background: linear-gradient(to left, var(--secondary-color), var(--primary-color)); padding: 0.6rem 1rem; font-weight: bold; color: #fff; border-radius: 12px; margin: 0 1rem 1rem; text-align: center; box-shadow: 0 3px 6px var(--shadow); }
+      ul.features { list-style: none; padding: 1rem; margin: 0; }
+      ul.features li { margin-bottom: 0.8rem; padding-right: 1.5rem; position: relative; }
+      ul.features li::before { content: "✅"; position: absolute; right: 0; }
+      .order-btn { background: var(--primary-color); color: white; border: none; padding: 0.8rem; width: 90%; margin: 1rem auto; display: block; text-align: center; border-radius: 8px; font-size: 1rem; cursor: pointer; transition: background-color 0.3s ease, color 0.3s ease; }
+      .order-btn:hover { background-color: var(--secondary-color); color: black; }
+    </style>
+  </head>
+  <body data-page="consultation">
+    <nav>
+      <a id="nav-about" href="about.html">من نحن</a>
+      <a id="nav-consult" href="consultation.html">طلب استشارة</a>
+      <a id="nav-reviews" href="results.html">اراء العملاء</a>
+      <button class="theme-toggle" onclick="toggleTheme()">
+        <span class="icon" id="theme-icon">🌙</span>
+        <span id="theme-text">الوضع الليلي</span>
+      </button>
+      <button id="lang-toggle" class="theme-toggle" onclick="toggleLanguage()">EN</button>
+    </nav>
+
+    <header>
+      <h1 id="header-title">باقة الاستشارة</h1>
+      <p id="header-subtitle">اختر الباقة التي تناسبك وابدأ رحلتك نحو هدفك</p>
+    </header>
+
+    <section id="cards" data-aos="fade-up">
+      <div class="pricing-card" id="consultCard"></div>
+    </section>
+
+    <section id="contact" data-aos="fade-up">
+      <h2 id="contact-heading">تواصل معنا</h2>
+      <p>
+        <span id="email-label">📧 البريد:</span>
+        <a href="mailto:labib.coach@gmail.com">labib.coach@gmail.com</a>
+      </p>
+      <p>
+        <span id="instagram-label">📸 انستجرام:</span>
+        <a href="https://instagram.com/labib_fitness" target="_blank">@labib_fitness</a>
+      </p>
+      <p>
+        <span id="tiktok-label">🎵 تيك توك:</span>
+        <a href="https://www.tiktok.com/@labeb2277?_t=ZS-8yvgjbvtIoq&_r=1" target="_blank">@labeb2277</a>
+      </p>
+      <p>
+        <span id="facebook-label">📘 فيسبوك:</span>
+        <a href="https://www.facebook.com/profile.php?id=100089424250842&mibextid=wwXIfr&mibextid=wwXIfr" target="_blank">Facebook</a>
+      </p>
+      <p>
+        <span id="youtube-label">▶️ يوتيوب:</span>
+        <a href="https://www.youtube.com/@MahmoudMohamed-j2v" target="_blank">@MahmoudMohamed-j2v</a>
+      </p>
+      <p>
+        <span id="telegram-label">✈️ تيليجرام:</span>
+        <a href="https://t.me/+201044383928" target="_blank">@+201044383928</a>
+      </p>
+    </section>
+
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script src="i18n.js"></script>
+    <script>
+      AOS.init({ once: true });
+
+      function renderConsultation(){
+        const card = document.getElementById('consultCard');
+        const pkgs = I18N.getPackages('consultation');
+        if (!pkgs.length) return;
+        const p = pkgs[0];
+        const featuresList = p.features.map(f => `<li>${f}</li>`).join('');
+        card.innerHTML = `
+          <div class="card-header">${p.title}</div>
+          <div class="price-circle">
+            <div>${p.price}</div>
+            <small>${I18N.getCurrency()}</small>
+          </div>
+          <div class="section-title">${I18N.t('features_title')}</div>
+          <ul class="features">${featuresList}</ul>
+          <a href="order.html?plan=${encodeURIComponent(p.title)}" class="order-btn">${I18N.t('order_now')}</a>
+        `;
+      }
+      window.renderPackages = renderConsultation;
+
+      function toggleTheme() {
+        const html = document.documentElement;
+        const themeIcon = document.getElementById('theme-icon');
+        if (html.getAttribute('data-theme') === 'dark') {
+          html.removeAttribute('data-theme');
+          themeIcon.textContent = '🌙';
+          localStorage.setItem('theme', 'light');
+        } else {
+          html.setAttribute('data-theme', 'dark');
+          themeIcon.textContent = '☀️';
+          localStorage.setItem('theme', 'dark');
+        }
+        updateThemeToggleText();
+      }
+
+      (function loadTheme(){
+        const saved = localStorage.getItem('theme');
+        const themeIcon = document.getElementById('theme-icon');
+        if (saved === 'dark') {
+          document.documentElement.setAttribute('data-theme', 'dark');
+          themeIcon.textContent = '☀️';
+        }
+        updateThemeToggleText();
+      })();
+
+      I18N.init();
+      renderConsultation();
+    </script>
+  </body>
+</html> 

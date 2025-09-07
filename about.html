@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>من نحن</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        --primary-color: #ff5722;
+        --secondary-color: #ffc107;
+        --bg-color: #f8f9fa;
+        --text-color: #212121;
+        --card-bg: #fff;
+        --nav-bg: #fff;
+        --border-color: #ddd;
+        --shadow: rgba(0, 0, 0, 0.1);
+      }
+
+      [data-theme="dark"] {
+        --primary-color: #ff7043;
+        --secondary-color: #ffd54f;
+        --bg-color: #121212;
+        --text-color: #e0e0e0;
+        --card-bg: #1e1e1e;
+        --nav-bg: #1e1e1e;
+        --border-color: #333;
+        --shadow: rgba(0, 0, 0, 0.3);
+      }
+
+      * { margin: 0; padding: 0; box-sizing: border-box; }
+      body { font-family: "Cairo", sans-serif; background-color: var(--bg-color); color: var(--text-color); }
+
+      nav {
+        position: fixed; top: 0; width: 100%; background-color: var(--nav-bg);
+        padding: 1rem 2rem; display: flex; justify-content: center; align-items: center; gap: 0.75rem;
+        z-index: 1000; border-bottom: 1px solid var(--border-color);
+      }
+      nav a { color: var(--text-color); font-weight: bold; }
+      nav a:hover { color: var(--primary-color); }
+      .theme-toggle { background: none; border: 2px solid var(--primary-color); color: var(--text-color); padding: 0.5rem 1rem; border-radius: 25px; cursor: pointer; font-family: "Cairo", sans-serif; font-weight: bold; display: flex; align-items: center; gap: .5rem; }
+      .theme-toggle:hover { background-color: var(--primary-color); color: #fff; }
+
+      header { margin-top: 120px; text-align: center; padding: 2rem 1rem; }
+      main { max-width: 900px; margin: 0 auto; padding: 1rem; }
+      .about-card { background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 12px; box-shadow: 0 4px 10px var(--shadow); padding: 1.5rem; }
+      .about-list { margin-top: 1rem; }
+      .about-list li { margin: .5rem 0; }
+      .coach-img { width: 160px; height: 160px; object-fit: cover; border-radius: 50%; display: block; margin: 0 auto 1rem; }
+    </style>
+  </head>
+  <body data-page="about">
+    <nav>
+      <a id="nav-about" href="about.html">من نحن</a>
+      <a id="nav-consult" href="consultation.html">طلب استشارة</a>
+      <a id="nav-reviews" href="results.html">اراء العملاء</a>
+      <button class="theme-toggle" onclick="toggleTheme()">
+        <span class="icon" id="theme-icon">🌙</span>
+        <span id="theme-text">الوضع الليلي</span>
+      </button>
+      <button id="lang-toggle" class="theme-toggle" onclick="toggleLanguage()">EN</button>
+    </nav>
+
+    <header>
+      <h1 id="about-heading">عن المدرب</h1>
+    </header>
+
+    <main>
+      <div class="about-card">
+        <img src="coach.jpg" alt="المدرب" class="coach-img" />
+        <p id="about-desc"></p>
+        <ul class="about-list">
+          <li id="about-li-1"></li>
+          <li id="about-li-2"></li>
+          <li id="about-li-3"></li>
+          <li id="about-li-4"></li>
+          <li id="about-li-5"></li>
+        </ul>
+      </div>
+    </main>
+
+    <script src="i18n.js"></script>
+    <script>
+      function toggleTheme() {
+        const html = document.documentElement;
+        const themeIcon = document.getElementById("theme-icon");
+        if (html.getAttribute("data-theme") === "dark") {
+          html.removeAttribute("data-theme");
+          themeIcon.textContent = "🌙";
+          localStorage.setItem("theme", "light");
+        } else {
+          html.setAttribute("data-theme", "dark");
+          themeIcon.textContent = "☀️";
+          localStorage.setItem("theme", "dark");
+        }
+        updateThemeToggleText();
+      }
+      (function loadTheme(){
+        const savedTheme = localStorage.getItem("theme");
+        const themeIcon = document.getElementById("theme-icon");
+        if (savedTheme === "dark") { document.documentElement.setAttribute("data-theme", "dark"); themeIcon.textContent = "☀️"; }
+        updateThemeToggleText();
+      })();
+      I18N.init();
+    </script>
+  </body>
+</html> 

@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>نتائج عملائنا</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        --primary-color: #ff5722;
+        --secondary-color: #ffc107;
+        --bg-color: #f8f9fa;
+        --text-color: #212121;
+        --card-bg: #fff;
+        --nav-bg: #fff;
+        --border-color: #ddd;
+        --shadow: rgba(0, 0, 0, 0.1);
+      }
+
+      [data-theme="dark"] {
+        --primary-color: #ff7043;
+        --secondary-color: #ffd54f;
+        --bg-color: #121212;
+        --text-color: #e0e0e0;
+        --card-bg: #1e1e1e;
+        --nav-bg: #1e1e1e;
+        --border-color: #333;
+        --shadow: rgba(0, 0, 0, 0.3);
+      }
+
+      * { margin: 0; padding: 0; box-sizing: border-box; }
+      body { font-family: "Cairo", sans-serif; background-color: var(--bg-color); color: var(--text-color); }
+
+      nav {
+        position: fixed; top: 0; width: 100%; background-color: var(--nav-bg);
+        padding: 1rem 2rem; display: flex; justify-content: center; align-items: center; gap: 0.75rem;
+        z-index: 1000; border-bottom: 1px solid var(--border-color);
+      }
+      nav a { color: var(--text-color); font-weight: bold; }
+      nav a:hover { color: var(--primary-color); }
+      .theme-toggle { background: none; border: 2px solid var(--primary-color); color: var(--text-color); padding: 0.5rem 1rem; border-radius: 25px; cursor: pointer; font-family: "Cairo", sans-serif; font-weight: bold; display: flex; align-items: center; gap: .5rem; }
+      .theme-toggle:hover { background-color: var(--primary-color); color: #fff; }
+
+      main { max-width: 1000px; margin: 120px auto 40px; padding: 1rem; }
+      h1, h2 { margin: 1rem 0; }
+      .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1rem; }
+      .card { background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 12px; box-shadow: 0 4px 10px var(--shadow); overflow: hidden; }
+      .card img { width: 100%; display: block; }
+      .testimonial { background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 12px; padding: 1rem; }
+    </style>
+  </head>
+  <body data-page="results">
+    <nav>
+      <a id="nav-about" href="about.html">من نحن</a>
+      <a id="nav-consult" href="consultation.html">طلب استشارة</a>
+      <a id="nav-reviews" href="results.html">اراء العملاء</a>
+      <button class="theme-toggle" onclick="toggleTheme()">
+        <span class="icon" id="theme-icon">🌙</span>
+        <span id="theme-text">الوضع الليلي</span>
+      </button>
+      <button id="lang-toggle" class="theme-toggle" onclick="toggleLanguage()">EN</button>
+    </nav>
+
+    <main>
+      <h1 id="results-heading">نتائج عملائنا</h1>
+      <div class="grid">
+        <div class="card"><img src="result1.jpg" alt="نتيجة 1" /></div>
+        <div class="card"><img src="result2.jpg" alt="نتيجة 2" /></div>
+        <div class="card"><img src="result3.jpg" alt="نتيجة 3" /></div>
+        <div class="card"><img src="result4.jpg" alt="نتيجة 4" /></div>
+        <div class="card"><img src="result5.jpg" alt="نتيجة 5" /></div>
+      </div>
+
+      <h2 id="testimonials-heading" style="margin-top: 2rem;">آراء عملائنا</h2>
+      <div class="grid">
+        <div class="testimonial" id="test-1-text"></div>
+        <div class="testimonial" id="test-2-text"></div>
+        <div class="testimonial" id="test-3-text"></div>
+      </div>
+    </main>
+
+    <script src="i18n.js"></script>
+    <script>
+      function toggleTheme() {
+        const html = document.documentElement;
+        const themeIcon = document.getElementById("theme-icon");
+        if (html.getAttribute("data-theme") === "dark") {
+          html.removeAttribute("data-theme");
+          themeIcon.textContent = "🌙";
+          localStorage.setItem("theme", "light");
+        } else {
+          html.setAttribute("data-theme", "dark");
+          themeIcon.textContent = "☀️";
+          localStorage.setItem("theme", "dark");
+        }
+        updateThemeToggleText();
+      }
+      (function loadTheme(){
+        const savedTheme = localStorage.getItem("theme");
+        const themeIcon = document.getElementById("theme-icon");
+        if (savedTheme === "dark") { document.documentElement.setAttribute("data-theme", "dark"); themeIcon.textContent = "☀️"; }
+        updateThemeToggleText();
+      })();
+      I18N.init();
+      // Fill test names if desired
+      document.getElementById('test-1-text').textContent = I18N.t('test_1_text');
+      document.getElementById('test-2-text').textContent = I18N.t('test_2_text');
+      document.getElementById('test-3-text').textContent = I18N.t('test_3_text');
+    </script>
+  </body>
+</html> 

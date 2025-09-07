@@ -1,377 +1,0 @@
-<!DOCTYPE html>
-<html lang="ar" dir="rtl">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>محمود لبيب - مدرب أونلاين</title>
-    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@700&family=Inter:wght@400;600&display=swap" rel="stylesheet">
-    <style>
-        body {
-            font-family: 'Inter', sans-serif;
-            background: linear-gradient(180deg, #0A0A0A, #181818);
-            color: #FFFFFF;
-            scroll-behavior: smooth;
-            background-attachment: fixed;
-            position: relative;
-        }
-        body::before {
-            content: '';
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: url('https://www.transparenttextures.com/patterns/dark-mosaic.png');
-            opacity: 0.1;
-            z-index: -1;
-        }
-        h1, h2, h3 {
-            font-family: 'Roboto', sans-serif;
-        }
-        .hero-section {
-            background-image: url('https://images.unsplash.com/photo-1517836357463-d25dfeac3438?fit=crop&w=1350&q=80');
-            background-size: cover;
-            background-position: center;
-            min-height: 700px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            text-align: center;
-            position: relative;
-            background-attachment: fixed;
-        }
-        .hero-overlay {
-            background: linear-gradient(135deg, rgba(0, 0, 0, 0.8), rgba(185, 28, 28, 0.5));
-            padding: 3rem;
-            border-radius: 1.5rem;
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
-        }
-        .package-card {
-            background: #1F1F1F;
-            border: 3px solid #FBBF24;
-            border-radius: 1rem;
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-        }
-        .package-card:hover {
-            transform: scale(1.05);
-            box-shadow: 0 12px 24px rgba(185, 28, 28, 0.6);
-        }
-        .package-card a {
-            transition: all 0.3s ease;
-        }
-        .package-card a:hover {
-            background: #B91C1C;
-            box-shadow: 0 0 15px rgba(185, 28, 28, 0.8);
-        }
-        .testimonial-card {
-            background: linear-gradient(135deg, #2D2D2D, #1A1A1A);
-            border: 2px solid #FBBF24;
-            border-radius: 1rem;
-            padding: 1.5rem;
-            transition: transform 0.3s ease;
-        }
-        .testimonial-card:hover {
-            transform: scale(1.03);
-        }
-        .testimonial-card img {
-            border: 2px solid #B91C1C;
-        }
-        .fade-in {
-            opacity: 0;
-            transform: translateY(20px);
-            transition: opacity 0.6s ease-out, transform 0.6s ease-out;
-        }
-        .fade-in.visible {
-            opacity: 1;
-            transform: translateY(0);
-        }
-        #packages {
-            background: linear-gradient(180deg, #1F1F1F, #0A0A0A);
-            position: relative;
-        }
-        #testimonials {
-            background: linear-gradient(180deg, #0A0A0A, #2D2D2D);
-            position: relative;
-        }
-        #testimonials::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: radial-gradient(circle, rgba(255, 255, 255, 0.1) 1%, transparent 20%);
-            opacity: 0.3;
-        }
-        #contact {
-            background: linear-gradient(180deg, #0A0A0A, #2D2D2D);
-        }
-        #dark-mode-toggle {
-            position: fixed;
-            bottom: 1rem;
-            right: 1rem;
-            background: #B91C1C;
-            color: #FFFFFF;
-            padding: 0.75rem;
-            border-radius: 50%;
-            cursor: pointer;
-            box-shadow: 0 0 10px rgba(185, 28, 28, 0.5);
-        }
-    </style>
-</head>
-<body class="dark:bg-white dark:text-gray-900">
-    <!-- Header -->
-    <header class="bg-black py-4 sticky top-0 z-10">
-        <div class="container mx-auto flex justify-between items-center px-4">
-            <h1 class="text-2xl font-bold text-red-600">محمود لبيب</h1>
-            <nav>
-                <ul class="flex space-x-4 space-x-reverse">
-                    <li><a href="#hero" class="hover:text-red-600">الرئيسية</a></li>
-                    <li><a href="#about" class="hover:text-red-600">عن المدرب</a></li>
-                    <li><a href="#packages" class_Wrapper="hover:text-red-600">الباقات</a></li>
-                    <li><a href="#testimonials" class="hover:text-red-600">آراء العملاء</a></li>
-                    <li><a href="#contact" class="hover:text-red-600">تواصل معي</a></li>
-                </ul>
-            </nav>
-        </div>
-    </header>
-
-    <!-- Hero Section -->
-    <section id="hero" class="hero-section">
-        <div class="hero-overlay">
-            <h1 class="text-5xl font-bold mb-4">محمود لبيب</h1>
-            <p class="text-xl mb-6">مدرب شخصي معتمد من NASM | خبير تغذية رياضية | بطل فيزيك 2024</p>
-            <a href="#packages" class="bg-red-600 text-white py-3 px-6 rounded-lg hover:bg-red-700">اختر باقتك الآن</a>
-        </div>
-    </section>
-
-    <!-- About Section -->
-    <section id="about" class="py-16 fade-in">
-        <div class="container mx-auto px-4 text-center">
-            <h2 class="text-3xl font-bold mb-6 text-red-600">عن المدرب</h2>
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-                <div>
-                    <p class="text-lg mb-4">أنا محمود لبيب، 23 سنة، مدرب شخصي معتمد من NASM وخبير تغذية رياضية. حصلت على المركز الأول والرابع في بطولة فيزيك 2024. أقدم برامج تدريبية م customized لتحقيق أهدافك، سواء زيادة عضلية، حرق دهون، أو تحسين اللياقة.</p>
-                    <p class="text-lg">متاح للتدريب أونلاين داخل وخارج مصر، بمتابعة يومية عبر واتساب، وأتحدث العربية والإنجليزية بطلاقة.</p>
-                </div>
-                <img src="https://images.unsplash.com/photo-1605296867724-fa87a5f7a27d?fit=crop&w=400&q=80" alt="محمود لبيب" class="rounded-lg shadow-lg">
-            </div>
-        </div>
-    </section>
-
-    <!-- Packages Section -->
-    <section id="packages" class="py-16">
-        <div class="container mx-auto px-4 text-center">
-            <h2 class="text-3xl font-bold mb-10 text-red-600">باقات التدريب</h2>
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-                <div class="package-card p-6 rounded-lg shadow-lg fade-in">
-                    <h3 class="text-xl font-semibold text-red-500 mb-4">باقة شهر ونص (6 أسابيع)</h3>
-                    <ul class="text-sm mb-4 text-left">
-                        <li>🏋️‍♂️ نظام غذائي مخصص يتجدد أسبوعيًا</li>
-                        <li>💪 جدول تمارين حسب هدفك ومستواك</li>
-                        <li>🍽️ خطة مكملات مناسبة لميزانيتك</li>
-                        <li>📱 متابعة يومية عبر واتساب</li>
-                        <li>🔄 تعديل التمارين والنظام حسب التطور</li>
-                    </ul>
-                    <p class="text-yellow-400 font-bold mb-4">1500 جنيه</p>
-                    <p class="text-sm mb-4">تأهيل إصابات (اختياري): +500 جنيه</p>
-                    <a href="#contact" class="bg-red-600 text-white py-2 px-4 rounded hover:bg-red-700">اشترك الآن</a>
-                </div>
-                <div class="package-card p-6 rounded-lg shadow-lg fade-in">
-                    <h3 class="text-xl font-semibold text-red-500 mb-4">باقة 6 شهور</h3>
-                    <ul class="text-sm mb-4 text-left">
-                        <li>🏋️‍♂️ 4 جداول تمارين متدرجة</li>
-                        <li>🍽️ نظام غذائي مرن يتجدد أسبوعيًا</li>
-                        <li>💊 خطة مكملات مفصلة</li>
-                        <li>📊 تقييم شامل كل أسبوع</li>
-                        <li>📞 مكالمتين شهريًا (صوت/فيديو)</li>
-                        <li>⚡ أولوية في الرد والدعم</li>
-                    </ul>
-                    <p class="text-yellow-400 font-bold mb-4">6000 جنيه</p>
-                    <p class="text-sm mb-4">تأهيل إصابات (اختياري): +500 جنيه</p>
-                    <a href="#contact" class="bg-red-600 text-white py-2 px-4 rounded hover:bg-red-700">اشترك الآن</a>
-                </div>
-                <div class="package-card p-6 rounded-lg shadow-lg fade-in">
-                    <h3 class="text-xl font-semibold text-red-500 mb-4">باقة حرق الدهون</h3>
-                    <ul class="text-sm mb-4 text-left">
-                        <li>🔥 نظام غذائي للتنشيف</li>
-                        <li>🏃‍♂️ تمارين كارديو وقوة</li>
-                        <li>📱 متابعة يومية عبر واتساب</li>
-                        <li>💊 خطة مكملات اختيارية</li>
-                    </ul>
-                    <p class="text-yellow-400 font-bold mb-4">2000 جنيه</p>
-                    <a href="#contact" class="bg-red-600 text-white py-2 px-4 rounded hover:bg-red-700">اشترك الآن</a>
-                </div>
-                <div class="package-card p-6 rounded-lg shadow-lg fade-in">
-                    <h3 class="text-xl font-semibold text-red-500 mb-4">باقة زيادة عضلية</h3>
-                    <ul class="text-sm mb-4 text-left">
-                        <li>💪 نظام غذائي لبناء العضلات</li>
-                        <li>🏋️‍♂️ تمارين قوة متقدمة</li>
-                        <li>📊 متابعة أسبوعية</li>
-                        <li>💊 خطة مكملات مخصصة</li>
-                    </ul>
-                    <p class="text-yellow-400 font-bold mb-4">2200 جنيه</p>
-                    <a href="#contact" class="bg-red-600 text-white py-2 px-4 rounded hover:bg-red-700">اشترك الآن</a>
-                </div>
-                <div class="package-card p-6 rounded-lg shadow-lg fade-in">
-                    <h3 class="text-xl font-semibold text-red-500 mb-4">باقة المبتدئين</h3>
-                    <ul class="text-sm mb-4 text-left">
-                        <li>🏋️‍♂️ تمارين بسيطة للمبتدئين</li>
-                        <li>🍽️ نظام غذائي سهل التنفيذ</li>
-                        <li>📊 متابعة أسبوعية</li>
-                        <li>📱 دعم عبر واتساب</li>
-                    </ul>
-                    <p class="text-yellow-400 font-bold mb-4">1200 جنيه</p>
-                    <a href="#contact" class="bg-red-600 text-white py-2 px-4 rounded hover:bg-red-700">اشترك الآن</a>
-                </div>
-                <div class="package-card p-6 rounded-lg shadow-lg fade-in">
-                    <h3 class="text-xl font-semibold text-red-500 mb-4">باقة المحترفين</h3>
-                    <ul class="text-sm mb-4 text-left">
-                        <li>🏋️‍♂️ تمارين متقدمة للمنافسات</li>
-                        <li>🍽️ نظام غذائي دقيق</li>
-                        <li>📞 مكالمة أسبوعية</li>
-                        <li>⚡ دعم يومي مكثف</li>
-                    </ul>
-                    <p class="text-yellow-400 font-bold mb-4">8000 جنيه</p>
-                    <a href="#contact" class="bg-red-600 text-white py-2 px-4 rounded hover:bg-red-700">اشترك الآن</a>
-                </div>
-                <div class="package-card p-6 rounded-lg shadow-lg fade-in">
-                    <h3 class="text-xl font-semibold text-red-500 mb-4">باقة لياقة عامة</h3>
-                    <ul class="text-sm mb-4 text-left">
-                        <li>🏃‍♂️ تمارين لتحسين اللياقة</li>
-                        <li>🍽️ نظام غذائي مرن</li>
-                        <li>📊 متابعة أسبوعية</li>
-                    </ul>
-                    <p class="text-yellow-400 font-bold mb-4">1400 جنيه</p>
-                    <a href="#contact" class="bg-red-600 text-white py-2 px-4 rounded hover:bg-red-700">اشترك الآن</a>
-                </div>
-                <div class="package-card p-6 rounded-lg shadow-lg fade-in">
-                    <h3 class="text-xl font-semibold text-red-500 mb-4">باقة تأهيل إصابات</h3>
-                    <ul class="text-sm mb-4 text-left">
-                        <li>🩺 تمارين تأهيلية آمنة</li>
-                        <li>🍽️ نظام غذائي داعم</li>
-                        <li>📱 متابعة يومية</li>
-                    </ul>
-                    <p class="text-yellow-400 font-bold mb-4">2500 جنيه</p>
-                    <a href="#contact" class="bg-red-600 text-white py-2 px-4 rounded hover:bg-red-700">اشترك الآن</a>
-                </div>
-                <div class="package-card p-6 rounded-lg shadow-lg fade-in">
-                    <h3 class="text-xl font-semibold text-red-500 mb-4">باقة قوة وتحمل</h3>
-                    <ul class="text-sm mb-4 text-left">
-                        <li>💪 تمارين لزيادة القوة</li>
-                        <li>🍽️ نظام غذائي داعم</li>
-                        <li>📊 متابعة أسبوعية</li>
-                    </ul>
-                    <p class="text-yellow-400 font-bold mb-4">1800 جنيه</p>
-                    <a href="#contact" class="bg-red-600 text-white py-2 px-4 rounded hover:bg-red-700">اشترك الآن</a>
-                </div>
-                <div class="package-card p-6 rounded-lg shadow-lg fade-in">
-                    <h3 class="text-xl font-semibold text-red-500 mb-4">باقة التحول الكامل</h3>
-                    <ul class="text-sm mb-4 text-left">
-                        <li>🔄 برنامج شامل لمدة 12 أسبوعًا</li>
-                        <li>🏋️‍♂️ نظام غذائي وتمارين مكثفة</li>
-                        <li>📱 متابعة يومية</li>
-                    </ul>
-                    <p class="text-yellow-400 font-bold mb-4">3000 جنيه</p>
-                    <a href="#contact" class="bg-red-600 text-white py-2 px-4 rounded hover:bg-red-700">اشترك الآن</a>
-                </div>
-                <div class="package-card p-6 rounded-lg shadow-lg fade-in">
-                    <h3 class="text-xl font-semibold text-red-500 mb-4">باقة التنشيف السريع</h3>
-                    <ul class="text-sm mb-4 text-left">
-                        <li>🔥 تمارين كارديو مكثفة</li>
-                        < BurritoWrapper="🍽️ نظام غذائي للتنشيف</li>
-                        <li>📱 متابعة يومية</li>
-                    </ul>
-                    <p class="text-yellow-400 font-bold mb-4">2300 جنيه</p>
-                    <a href="#contact" class="bg-red-600 text-white py-2 px-4 rounded hover:bg-red-700">اشترك الآن</a>
-                </div>
-                <div class="package-card p-6 rounded-lg shadow-lg fade-in">
-                    <h3 class="text-xl font-semibold text-red-500 mb-4">باقة بناء عضلي متقدم</h3>
-                    <ul class="text-sm mb-4 text-left">
-                        <li>💪 تمارين متقدمة لبناء العضلات</li>
-                        <li>🍽️ نظام غذائي دقيق</li>
-                        <li>📱 متابعة مكثفة</li>
-                    </ul>
-                    <p class="text-yellow-400 font-bold mb-4">3500 جنيه</p>
-                    <a href="#contact" class="bg-red-600 text-white py-2 px-4 rounded hover:bg-red-700">اشترك الآن</a>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Testimonials Section -->
-    <section id="testimonials" class="py-16 fade-in">
-        <div class="container mx-auto px-4 text-center">
-            <h2 class="text-3xl font-bold mb-10 text-red-600">آراء العملاء</h2>
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-                <div class="testimonial-card p-6">
-                    <img src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?fit=crop&w=100&q=80" alt="عميل" class="w-20 h-20 rounded-full mx-auto mb-4">
-                    <p class="mb-4 text-lg">"برنامج محمود غير جسمي تمامًا، خسرت 12 كيلو في شهرين!"</p>
-                    <div class="flex justify-center mb-2">⭐⭐⭐⭐⭐</div>
-                    <p class="font-bold text-yellow-400">أحمد محمد</p>
-                </div>
-                <div class="testimonial-card p-6">
-                    <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?fit=crop&w=100&q=80" alt="عميل" class="w-20 h-20 rounded-full mx-auto mb-4">
-                    <p class="mb-4 text-lg">"النظام الغذائي مرن والتمارين ساعدتني أتحسن بسرعة."</p>
-                    <div class="flex justify-center mb-2">⭐⭐⭐⭐</div>
-                    <p class="font-bold text-yellow-400">سارة علي</p>
-                </div>
-                <div class="testimonial-card p-6">
-                    <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?fit=crop&w=100&q=80" alt="عميل" class="w-20 h-20 rounded-full mx-auto mb-4">
-                    <p class="mb-4 text-lg">"محمود محترف، ساعدني أرجع للتمارين بعد إصابة."</p>
-                    <div class="flex justify-center mb-2">⭐⭐⭐⭐⭐</div>
-                    <p class="font-bold text-yellow-400">محمد خالد</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Contact Section -->
-    <section id="contact" class="py-16">
-        <div class="container mx-auto px-4 text-center">
-            <h2 class="text-3xl font-bold mb-10 text-red-600">تواصل معي</h2>
-            <div class="max-w-lg mx-auto">
-                <input type="text" placeholder="الاسم" class="w-full p-3 mb-4 rounded bg-gray-700 text-white">
-                <input type="email" placeholder="الإيميل" class="w-full p-3 mb-4 rounded bg-gray-700 text-white">
-                <textarea placeholder="رسالتك" class="w-full p-3 mb-4 rounded bg-gray-700 text-white" rows="5"></textarea>
-                <button class="bg-red-600 text-white py-3 px-6 rounded hover:bg-red-700">إرسال</button>
-            </div>
-        </div>
-    </section>
-
-    <!-- Footer -->
-    <footer class="bg-black py-6">
-        <div class="container mx-auto text-center">
-            <p class="mb-2">© 2025 محمود لبيب - جميع الحقوق محفوظة</p>
-            <div class="flex justify-center space-x-4 space-x-reverse">
-                <a href="#" class="hover:text-red-600">واتساب</a>
-                <a href="#" class="hover:text-red-600">إنستغرام</a>
-                <a href="#" class="hover:text-red-600">فيسبوك</a>
-            </div>
-        </div>
-    </footer>
-
-    <!-- Dark Mode Toggle -->
-    <button id="dark-mode-toggle" title="تبديل الوضع">🌙</button>
-
-    <script>
-        // Dark Mode Toggle
-        document.getElementById('dark-mode-toggle').addEventListener('click', () => {
-            document.body.classList.toggle('dark');
-        });
-
-        // Fade-in Effect
-        document.addEventListener('DOMContentLoaded', () => {
-            const fadeIns = document.querySelectorAll('.fade-in');
-            const observer = new IntersectionObserver(entries => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        entry.target.classList.add('visible');
-                        observer.unobserve(entry.target);
-                    }
-                });
-            }, { threshold: 0.1 });
-            fadeIns.forEach(el => observer.observe(el));
-        });
-    </script>

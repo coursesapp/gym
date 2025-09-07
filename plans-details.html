@@ -85,7 +85,7 @@
         display: flex;
         justify-content: center;
         align-items: center;
-        gap: 2rem;
+        gap: 0.75rem;
         z-index: 1000;
         border-bottom: 1px solid var(--border-color);
         transition: background-color 0.3s ease, border-color 0.3s ease;
@@ -272,22 +272,23 @@
       }
     </style>
   </head>
-  <body>
+  <body data-page="plans-details">
     <nav>
       <!-- <a href="#services">الخدمات</a> -->
-      <a href="#plans">من نحن</a>
-      <a href="#results">طلب استشارة</a>
-      <a href="#about">اراء العملاء</a>
+      <a id="nav-about" href="about.html">من نحن</a>
+      <a id="nav-consult" href="consultation.html">طلب استشارة</a>
+      <a id="nav-reviews" href="results.html">اراء العملاء</a>
       <!-- <a href="#contact">تواصل</a> -->
       <button class="theme-toggle" onclick="toggleTheme()">
         <span class="icon" id="theme-icon">🌙</span>
         <span id="theme-text">الوضع الليلي</span>
       </button>
+      <button id="lang-toggle" class="theme-toggle" onclick="toggleLanguage()">EN</button>
     </nav>
 
     <header>
-      <h1>مرحبًا بك في باقاتنا</h1>
-      <p>اختر الباقة التي تناسبك وابدأ رحلتك نحو هدفك</p>
+      <h1 id="header-title">مرحبًا بك في باقاتنا</h1>
+      <p id="header-subtitle">اختر الباقة التي تناسبك وابدأ رحلتك نحو هدفك</p>
     </header>
 
     <section id="cards" data-aos="fade-up">
@@ -295,130 +296,99 @@
     </section>
 
     <section id="contact" data-aos="fade-up">
-      <h2>تواصل معنا</h2>
+      <h2 id="contact-heading">تواصل معنا</h2>
       <p>
-        📧 البريد:
+        <span id="email-label">📧 البريد:</span>
         <a href="mailto:labib.coach@gmail.com">labib.coach@gmail.com</a>
       </p>
       <p>
-        📸 انستجرام:
+        <span id="instagram-label">📸 انستجرام:</span>
         <a href="https://instagram.com/labib_fitness" target="_blank"
           >@labib_fitness</a
         >
       </p>
+      <p>
+        <span id="tiktok-label">🎵 تيك توك:</span>
+        <a href="https://www.tiktok.com/@labeb2277?_t=ZS-8yvgjbvtIoq&_r=1" target="_blank">@labeb2277</a>
+      </p>
+      <p>
+        <span id="facebook-label">📘 فيسبوك:</span>
+        <a href="https://www.facebook.com/profile.php?id=100089424250842&mibextid=wwXIfr&mibextid=wwXIfr" target="_blank">Facebook</a>
+      </p>
+      <p>
+        <span id="youtube-label">▶️ يوتيوب:</span>
+        <a href="https://www.youtube.com/@MahmoudMohamed-j2v" target="_blank">@MahmoudMohamed-j2v</a>
+      </p>
+      <p>
+        <span id="telegram-label">✈️ تيليجرام:</span>
+        <a href="https://t.me/+201044383928" target="_blank">@+201044383928</a>
+      </p>
     </section>
 
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script src="i18n.js"></script>
     <script>
       AOS.init({ once: true });
 
-      const packages = [
-        {
-          title: "باقة شهر ونص (6 أسابيع)",
-          price: 1500,
-          currency: "جنيه",
-          features: [
-            "نظام غذائي مخصص بيتجدد أسبوعيًا",
-            "جدول تمارين حسب هدفك ومستواك",
-            "خطة مكملات مناسبة لميزانيتك",
-            "متابعة يومية على واتساب (أسئلة – تقييم – تعديل)",
-            "تعديل التمرين والنظام حسب تطورك",
-          ],
-        },
-        {
-          title: "باقة 3 شهور",
-          price: 3000,
-          currency: "جنيه",
-          features: [
-            "نظام غذائي بيتجدد أسبوعيًا",
-            "جدولين تمرين (تجديد بعد أول شهر ونص)",
-            "خطة مكملات حسب المراحل",
-            "متابعة يومية شخصية على واتساب",
-            "مراجعة أسبوعية كاملة وتعديل عند الحاجة",
-          ],
-        },
-        {
-          title: "باقة 6 شهور",
-          price: 6000,
-          currency: "جنيه",
-          features: [
-            "4 جداول تمرين متدرجة حسب تطورك",
-            "نظام غذائي مرن بيتحدث أسبوعيًا",
-            "خطة مكملات مفصلة (أساسية + اختيارية)",
-            "تقييم شامل كل أسبوع",
-            "مكالمتين شهريًا صوت أو فيديو للمراجعة",
-            "أولوية في الرد والدعم اليومي",
-          ],
-        },
-      ];
-
-      const container = document.getElementById("cardsContainer");
-
-      packages.forEach((pkg) => {
-        const featuresList = pkg.features.map((f) => `<li>${f}</li>`).join("");
-
-        container.innerHTML += `
+      // Dynamic packages via i18n
+      function renderCards() {
+        const container = document.getElementById("cardsContainer");
+        if (!container) return;
+        const pageKey = "plans-details";
+        const tShared = I18N.t;
+        const pkgs = I18N.getPackages(pageKey);
+        container.innerHTML = "";
+        pkgs.forEach((pkg) => {
+          const featuresList = pkg.features.map((f) => `<li>${f}</li>`).join("");
+          container.innerHTML += `
     <div class="pricing-card">
       <div class="card-header">${pkg.title}</div>
       <div class="price-circle">
         <div>${pkg.price}</div>
-        <small>${pkg.currency}</small>
+        <small>${I18N.getCurrency()}</small>
       </div>
-      <div class="section-title">المميزات</div>
+      <div class="section-title">${tShared("features_title")}</div>
       <ul class="features">${featuresList}</ul>
-      <a href="order.html" class="order-btn">اطلب الآن</a>
+      <a href="order.html?plan=${encodeURIComponent(pkg.title)}" class="order-btn">${tShared("order_now")}</a>
     </div>
   `;
-      });
+        });
+      }
+      window.renderPackages = renderCards;
 
       // Dark mode functionality
       function toggleTheme() {
         const html = document.documentElement;
         const themeIcon = document.getElementById("theme-icon");
-        const themeText = document.getElementById("theme-text");
 
         if (html.getAttribute("data-theme") === "dark") {
           html.removeAttribute("data-theme");
           themeIcon.textContent = "🌙";
-          themeText.textContent = "الوضع الليلي";
           localStorage.setItem("theme", "light");
         } else {
           html.setAttribute("data-theme", "dark");
           themeIcon.textContent = "☀️";
-          themeText.textContent = "الوضع النهاري";
           localStorage.setItem("theme", "dark");
         }
+        updateThemeToggleText();
       }
 
       // Load saved theme preference
       function loadTheme() {
         const savedTheme = localStorage.getItem("theme");
         const themeIcon = document.getElementById("theme-icon");
-        const themeText = document.getElementById("theme-text");
 
         if (savedTheme === "dark") {
           document.documentElement.setAttribute("data-theme", "dark");
           themeIcon.textContent = "☀️";
-          themeText.textContent = "الوضع النهاري";
         }
+        updateThemeToggleText();
       }
 
-      // Initialize theme on page load
       loadTheme();
 
-      function openLightbox(img) {
-        const lightbox = document.getElementById("lightbox");
-        const lightboxImg = document.getElementById("lightbox-img");
-        lightboxImg.src = img.src;
-        lightbox.style.display = "flex";
-        document.body.style.overflow = "hidden"; // منع تمرير الصفحة
-      }
-
-      function closeLightbox() {
-        const lightbox = document.getElementById("lightbox");
-        lightbox.style.display = "none";
-        document.body.style.overflow = ""; // إعادة التمرير
-      }
+      I18N.init();
+      renderCards();
     </script>
   </body>
 </html>
