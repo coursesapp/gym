@@ -703,33 +703,3 @@
     themeText.textContent = isDark ? common.theme_light : common.theme_dark;
   };
 })(); 
-
-
-server {
-    server_name mahmoud-labib.genuisweb.com;
-
-    root /home/username/mahmoud-labib;
-    index index.html;
-
-    location / {
-        try_files $uri $uri/ =404;
-    }
-
-    listen 443 ssl; # managed by Certbot
-    ssl_certificate /etc/letsencrypt/live/mahmoud-labib.genuisweb.com/fullchain.pem; # managed by Certbot
-    ssl_certificate_key /etc/letsencrypt/live/mahmoud-labib.genuisweb.com/privkey.pem; # managed by Certbot
-    include /etc/letsencrypt/options-ssl-nginx.conf; # managed by Certbot
-    ssl_dhparam /etc/letsencrypt/ssl-dhparams.pem; # managed by Certbot
-
-}
-server {
-    if ($host = mahmoud-labib.genuisweb.com) {
-        return 301 https://$host$request_uri;
-    } # managed by Certbot
-
-
-    listen 80;
-    server_name mahmoud-labib.genuisweb.com;
-    return 404;
-
-}
