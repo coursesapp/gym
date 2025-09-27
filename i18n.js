@@ -8,8 +8,6 @@
   // ===== Translations =====
   const tCommon = {
     ar: {
-      theme_dark: "الوضع الليلي",
-      theme_light: "الوضع النهاري",
       contact_heading: "تواصل معنا",
       email_label: "📧 البريد:",
       instagram_label: "📸 انستجرام:",
@@ -22,8 +20,6 @@
       lang_button_label: "EN"
     },
     en: {
-      theme_dark: "Dark mode",
-      theme_light: "Light mode",
       contact_heading: "Contact us",
       email_label: "📧 Email:",
       instagram_label: "📸 Instagram:",
@@ -49,7 +45,7 @@
       about_desc: "محمود لبيب، مدرب شخصي معتمد من NASM، وخبير تغذية رياضية، وبطل فيزيك لعام 2024. بخبرة قوية في تصميم خطط التدريب والكورسات الدقيقة، يقدم محمود خدمات مخصصة لتحقيق نتائج حقيقية.",
       about_li_1: "📍 العمر: 23 سنة",
       about_li_2: "🌍 العمل: أونلاين داخل وخارج مصر",
-      about_li_3: "🗣️ اللغات: العربية – الإنجليزية (جيد جدًا)",
+      about_li_3: "🗣️ اللغات: العربية – الإنجليزية ",
       about_li_4: "🥇 المركز الأول – بطولة فيزيك 2024",
       about_li_5: "🏅 المركز الرابع – فئة مختلفة",
       premium_heading: "الباقات المميزة",
@@ -633,7 +629,6 @@
 
     const page = (document.body && document.body.getAttribute("data-page")) || "";
     applyStaticTranslations(page, lang);
-    updateThemeToggleText();
 
     // Re-render dynamic parts if available
     if (typeof window.renderPackages === "function") window.renderPackages();
@@ -692,14 +687,4 @@
     applyLanguage(next);
   };
 
-  window.updateThemeToggleText = function () {
-    const themeText = document.getElementById("theme-text");
-    if (!themeText) return;
-    if (!currentLang) {
-      currentLang = detectLanguageSync();
-    }
-    const isDark = document.documentElement.getAttribute("data-theme") === "dark";
-    const common = tCommon[currentLang] || tCommon.en;
-    themeText.textContent = isDark ? common.theme_light : common.theme_dark;
-  };
 })(); 

@@ -281,7 +281,6 @@
       <!-- <a href="#contact">تواصل</a> -->
       <button class="theme-toggle" onclick="toggleTheme()">
         <span class="icon" id="theme-icon">🌙</span>
-        <span id="theme-text">الوضع الليلي</span>
       </button>
       <button id="lang-toggle" class="theme-toggle" onclick="toggleLanguage()">EN</button>
     </nav>
@@ -369,7 +368,6 @@
           themeIcon.textContent = "☀️";
           localStorage.setItem("theme", "dark");
         }
-        updateThemeToggleText();
       }
 
       // Load saved theme preference
@@ -381,7 +379,6 @@
           document.documentElement.setAttribute("data-theme", "dark");
           themeIcon.textContent = "☀️";
         }
-        updateThemeToggleText();
       }
 
       loadTheme();
